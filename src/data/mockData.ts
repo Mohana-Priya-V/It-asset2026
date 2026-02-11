@@ -1,4 +1,4 @@
-import { User, Asset, AssetAssignment, DashboardStats } from '@/types';
+import { User, Asset, AssetAssignment, DashboardStats, RepairRequest, Department } from '@/types';
 
 // Mock Users
 export const mockUsers: User[] = [
@@ -258,6 +258,56 @@ export const mockAssignmentHistory: AssetAssignment[] = [
   },
 ];
 
+// Mock Repair Requests
+export const mockRepairRequests: RepairRequest[] = [
+  {
+    id: 'REP-001',
+    assetId: 'AST-002',
+    userId: '3',
+    issueType: 'hardware_issue',
+    description: 'Laptop keyboard keys are sticking, especially the spacebar and enter key.',
+    priority: 'high',
+    status: 'pending',
+    createdAt: '2024-03-10T09:00:00Z',
+    updatedAt: '2024-03-10T09:00:00Z',
+  },
+  {
+    id: 'REP-002',
+    assetId: 'AST-001',
+    userId: '2',
+    issueType: 'software_issue',
+    description: 'MacBook running very slow after latest OS update.',
+    priority: 'medium',
+    status: 'in_progress',
+    adminRemarks: 'Scheduled for diagnostics on Monday.',
+    createdAt: '2024-03-08T14:00:00Z',
+    updatedAt: '2024-03-09T10:00:00Z',
+  },
+  {
+    id: 'REP-003',
+    assetId: 'AST-007',
+    userId: '6',
+    issueType: 'damaged',
+    description: 'iPad screen has a crack in the bottom-left corner after accidental drop.',
+    priority: 'high',
+    status: 'pending',
+    createdAt: '2024-03-11T11:00:00Z',
+    updatedAt: '2024-03-11T11:00:00Z',
+  },
+  {
+    id: 'REP-004',
+    assetId: 'AST-004',
+    userId: '4',
+    issueType: 'not_working',
+    description: 'iPhone not charging with any cable.',
+    priority: 'medium',
+    status: 'resolved',
+    adminRemarks: 'Replaced charging port. Device now working fine.',
+    createdAt: '2024-02-20T08:00:00Z',
+    updatedAt: '2024-02-25T16:00:00Z',
+  },
+];
+
 // Dashboard Stats
 export const mockDashboardStats: DashboardStats = {
   totalAssets: mockAssets.length,
@@ -266,6 +316,7 @@ export const mockDashboardStats: DashboardStats = {
   totalUsers: mockUsers.length,
   totalEmployees: mockUsers.filter(u => u.role === 'employee').length,
   assetsInMaintenance: mockAssets.filter(a => a.status === 'maintenance').length,
+  pendingRepairRequests: 2,
 };
 
 // Helper function to get enriched assignments
@@ -283,4 +334,37 @@ export function getUserAssignedAssets(userId: string): Asset[] {
   return userAssignments
     .map(a => mockAssets.find(asset => asset.id === a.assetId))
     .filter((asset): asset is Asset => asset !== undefined);
+}
+
+// Helper: get enriched repair requests
+export function getEnrichedRepairRequests(): RepairRequest[] {
+  return mockRepairRequests.map(req => ({
+    ...req,
+    asset: mockAssets.find(a => a.id === req.assetId),
+    user: mockUsers.find(u => u.id === req.userId),
+  }));
+}
+
+// Helper: get repair requests for a specific user
+export function getUserRepairRequests(userId: string): RepairRequest[] {
+  return getEnrichedRepairRequests().filter(r => r.userId === userId);
+}
+
+// Helper: get departments with employees & assets
+export function getDepartments(): Department[] {
+  const deptNames = [...new Set(mockUsers.map(u => u.department))];
+  return deptNames.map(name => {
+    const employees = mockUsers.filter(u => u.department === name);
+    const employeeIds = employees.map(e => e.id);
+    const assignedAssetIds = mockAssignments
+      .filter(a => employeeIds.includes(a.userId) && !a.returnedAt)
+      .map(a => a.assetId);
+    const assets = mockAssets.filter(a => assignedAssetIds.includes(a.id));
+    return { name, employees, assets };
+  });
+}
+
+// Helper: pending repair requests count
+export function getPendingRepairCount(): number {
+  return mockRepairRequests.filter(r => r.status === 'pending').length;
 }

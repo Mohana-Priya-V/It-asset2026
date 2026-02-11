@@ -65,6 +65,33 @@ export interface ApiResponse<T> {
   success: boolean;
 }
 
+// Repair Request Types
+export type IssueType = 'damaged' | 'not_working' | 'software_issue' | 'hardware_issue' | 'other';
+export type IssuePriority = 'low' | 'medium' | 'high';
+export type IssueStatus = 'pending' | 'in_progress' | 'resolved' | 'rejected';
+
+export interface RepairRequest {
+  id: string;
+  assetId: string;
+  userId: string;
+  issueType: IssueType;
+  description: string;
+  priority: IssuePriority;
+  status: IssueStatus;
+  adminRemarks?: string;
+  createdAt: string;
+  updatedAt: string;
+  asset?: Asset;
+  user?: User;
+}
+
+// Department Types
+export interface Department {
+  name: string;
+  employees: User[];
+  assets: Asset[];
+}
+
 // Stats Types
 export interface DashboardStats {
   totalAssets: number;
@@ -73,4 +100,5 @@ export interface DashboardStats {
   totalUsers: number;
   totalEmployees: number;
   assetsInMaintenance: number;
+  pendingRepairRequests: number;
 }

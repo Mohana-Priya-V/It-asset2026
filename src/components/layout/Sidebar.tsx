@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { getPendingRepairCount } from '@/data/mockData';
 import {
   LayoutDashboard,
   Users,
@@ -7,14 +8,17 @@ import {
   ClipboardList,
   User,
   LogOut,
-  Settings,
   Monitor,
+  Building2,
+  Wrench,
+  AlertTriangle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function Sidebar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const pendingCount = getPendingRepairCount();
 
   const handleLogout = () => {
     logout();
@@ -26,11 +30,15 @@ export function Sidebar() {
     { to: '/admin/users', icon: Users, label: 'User Management' },
     { to: '/admin/assets', icon: Package, label: 'Assets' },
     { to: '/admin/assignments', icon: ClipboardList, label: 'Assignments' },
+    { to: '/admin/departments', icon: Building2, label: 'Departments' },
+    { to: '/admin/repair-requests', icon: Wrench, label: 'Repair Requests', badge: pendingCount },
   ];
 
   const employeeLinks = [
     { to: '/employee', icon: LayoutDashboard, label: 'Dashboard', end: true },
     { to: '/employee/assets', icon: Monitor, label: 'My Assets' },
+    { to: '/employee/report-issue', icon: AlertTriangle, label: 'Report Issue' },
+    { to: '/employee/my-requests', icon: ClipboardList, label: 'My Requests' },
     { to: '/employee/profile', icon: User, label: 'Profile' },
   ];
 
@@ -53,7 +61,7 @@ export function Sidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 p-4 space-y-1">
-        {links.map(({ to, icon: Icon, label, end }) => (
+        {links.map(({ to, icon: Icon, label, end, ...rest }) => (
           <NavLink
             key={to}
             to={to}
@@ -63,7 +71,12 @@ export function Sidebar() {
             }
           >
             <Icon className="w-5 h-5" />
-            <span>{label}</span>
+            <span className="flex-1">{label}</span>
+            {'badge' in rest && (rest as any).badge > 0 && (
+              <span className="ml-auto bg-destructive text-destructive-foreground text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {(rest as any).badge}
+              </span>
+            )}
           </NavLink>
         ))}
       </nav>

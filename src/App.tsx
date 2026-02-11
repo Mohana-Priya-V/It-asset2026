@@ -15,11 +15,15 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import UserManagement from "./pages/admin/UserManagement";
 import AssetManagement from "./pages/admin/AssetManagement";
 import AssignmentManagement from "./pages/admin/AssignmentManagement";
+import Departments from "./pages/admin/Departments";
+import RepairRequests from "./pages/admin/RepairRequests";
 
 // Employee Pages
 import EmployeeDashboard from "./pages/employee/Dashboard";
 import EmployeeAssets from "./pages/employee/MyAssets";
 import EmployeeProfile from "./pages/employee/Profile";
+import ReportIssue from "./pages/employee/ReportIssue";
+import MyRequests from "./pages/employee/MyRequests";
 
 const queryClient = new QueryClient();
 
@@ -43,64 +47,19 @@ function AppRoutes() {
       <Route path="/" element={<RootRedirect />} />
       
       {/* Admin Routes */}
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AdminDashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin/users"
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <UserManagement />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin/assets"
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AssetManagement />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin/assignments"
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AssignmentManagement />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/admin" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/admin/users" element={<ProtectedRoute allowedRoles={['admin']}><UserManagement /></ProtectedRoute>} />
+      <Route path="/admin/assets" element={<ProtectedRoute allowedRoles={['admin']}><AssetManagement /></ProtectedRoute>} />
+      <Route path="/admin/assignments" element={<ProtectedRoute allowedRoles={['admin']}><AssignmentManagement /></ProtectedRoute>} />
+      <Route path="/admin/departments" element={<ProtectedRoute allowedRoles={['admin']}><Departments /></ProtectedRoute>} />
+      <Route path="/admin/repair-requests" element={<ProtectedRoute allowedRoles={['admin']}><RepairRequests /></ProtectedRoute>} />
       
       {/* Employee Routes */}
-      <Route
-        path="/employee"
-        element={
-          <ProtectedRoute allowedRoles={['employee']}>
-            <EmployeeDashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/employee/assets"
-        element={
-          <ProtectedRoute allowedRoles={['employee']}>
-            <EmployeeAssets />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/employee/profile"
-        element={
-          <ProtectedRoute allowedRoles={['employee']}>
-            <EmployeeProfile />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/employee" element={<ProtectedRoute allowedRoles={['employee']}><EmployeeDashboard /></ProtectedRoute>} />
+      <Route path="/employee/assets" element={<ProtectedRoute allowedRoles={['employee']}><EmployeeAssets /></ProtectedRoute>} />
+      <Route path="/employee/report-issue" element={<ProtectedRoute allowedRoles={['employee']}><ReportIssue /></ProtectedRoute>} />
+      <Route path="/employee/my-requests" element={<ProtectedRoute allowedRoles={['employee']}><MyRequests /></ProtectedRoute>} />
+      <Route path="/employee/profile" element={<ProtectedRoute allowedRoles={['employee']}><EmployeeProfile /></ProtectedRoute>} />
       
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
