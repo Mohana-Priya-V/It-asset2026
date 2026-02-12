@@ -26,7 +26,6 @@ export default function Login() {
     setIsLoading(false);
 
     if (result.success) {
-      // Redirect based on role
       if (email === DEMO_CREDENTIALS.admin.email) {
         navigate('/admin');
       } else {
@@ -44,75 +43,89 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex bg-background">
+    <div className="min-h-screen flex relative overflow-hidden">
+      {/* Background gradient orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-80 h-80 rounded-full opacity-20 blur-3xl"
+          style={{ background: 'hsl(var(--primary))' }} />
+        <div className="absolute -bottom-40 -right-40 w-80 h-80 rounded-full opacity-20 blur-3xl"
+          style={{ background: 'hsl(var(--accent))' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-5 blur-3xl"
+          style={{ background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))' }} />
+      </div>
+
       {/* Left Panel - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-primary relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-accent opacity-90" />
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))' }} />
+        <div className="absolute inset-0 opacity-10"
+          style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
         <div className="relative z-10 flex flex-col justify-center px-16 text-primary-foreground">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-14 h-14 rounded-xl bg-primary-foreground/10 backdrop-blur flex items-center justify-center">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="w-16 h-16 rounded-2xl bg-primary-foreground/10 backdrop-blur-sm flex items-center justify-center border border-primary-foreground/20 animate-float">
               <Package className="w-8 h-8" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold">IT Asset Manager</h1>
-              <p className="text-primary-foreground/70">Enterprise Solution</p>
+              <h1 className="text-2xl font-extrabold">IT Asset Manager</h1>
+              <p className="text-primary-foreground/60 text-sm tracking-wider uppercase">Enterprise Solution</p>
             </div>
           </div>
-          <h2 className="text-4xl font-bold mb-4 leading-tight">
-            Manage your IT assets<br />with confidence
+          <h2 className="text-5xl font-extrabold mb-6 leading-tight">
+            Manage your<br />IT assets with<br />
+            <span className="text-primary-foreground/80">confidence</span>
           </h2>
-          <p className="text-lg text-primary-foreground/80 max-w-md">
+          <p className="text-lg text-primary-foreground/70 max-w-md leading-relaxed">
             Track, assign, and maintain your organization's IT equipment 
             efficiently with our comprehensive asset management system.
           </p>
           
-          <div className="mt-12 grid grid-cols-2 gap-6">
-            <div className="p-4 rounded-lg bg-primary-foreground/10 backdrop-blur">
-              <div className="text-3xl font-bold">500+</div>
-              <div className="text-sm text-primary-foreground/70">Assets Tracked</div>
+          <div className="mt-14 grid grid-cols-2 gap-4">
+            <div className="p-5 rounded-2xl bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/10">
+              <div className="text-3xl font-extrabold">500+</div>
+              <div className="text-sm text-primary-foreground/60 mt-1">Assets Tracked</div>
             </div>
-            <div className="p-4 rounded-lg bg-primary-foreground/10 backdrop-blur">
-              <div className="text-3xl font-bold">99.9%</div>
-              <div className="text-sm text-primary-foreground/70">Uptime</div>
+            <div className="p-5 rounded-2xl bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/10">
+              <div className="text-3xl font-extrabold">99.9%</div>
+              <div className="text-sm text-primary-foreground/60 mt-1">Uptime</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Right Panel - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-8">
+      <div className="flex-1 flex items-center justify-center p-8 relative z-10">
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center gap-3 mb-8">
-            <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center"
+              style={{ background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))' }}>
               <Package className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">IT Asset Manager</h1>
+              <h1 className="text-xl font-extrabold text-foreground">IT Asset Manager</h1>
               <p className="text-sm text-muted-foreground">Enterprise Solution</p>
             </div>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-foreground mb-2">Welcome back</h2>
+            <h2 className="text-3xl font-extrabold text-foreground mb-2">Welcome back</h2>
             <p className="text-muted-foreground">Sign in to your account to continue</p>
           </div>
 
           {/* Demo Credentials Info */}
-          <div className="mb-6 p-4 rounded-lg bg-muted border border-border">
-            <p className="text-sm font-medium text-foreground mb-3">Demo Credentials</p>
+          <div className="mb-6 glass-card p-4">
+            <p className="text-sm font-semibold text-foreground mb-3">Demo Credentials</p>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={() => fillDemoCredentials('admin')}
-                className="flex-1 px-3 py-2 text-sm rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                className="btn-primary flex-1 text-sm py-2"
               >
                 Fill Admin
               </button>
               <button
                 type="button"
                 onClick={() => fillDemoCredentials('employee')}
-                className="flex-1 px-3 py-2 text-sm rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
+                className="btn-secondary flex-1 text-sm py-2"
               >
                 Fill Employee
               </button>
@@ -121,49 +134,49 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="flex items-center gap-2 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
+              <div className="flex items-center gap-2 p-3 rounded-xl bg-destructive/10 text-destructive text-sm border border-destructive/20">
                 <AlertCircle className="w-4 h-4 flex-shrink-0" />
                 <span>{error}</span>
               </div>
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="email" className="block text-sm font-semibold text-foreground mb-2">
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="input-field pl-10"
+                  className="input-field pl-12"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="password" className="block text-sm font-semibold text-foreground mb-2">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  className="input-field pl-10 pr-10"
+                  className="input-field pl-12 pr-12"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -173,7 +186,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={isLoading}
-              className="btn-primary w-full h-11 text-base"
+              className="btn-primary w-full h-12 text-base"
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">
