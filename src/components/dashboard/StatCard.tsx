@@ -13,18 +13,11 @@ interface StatCardProps {
   variant?: 'default' | 'primary' | 'success' | 'warning';
 }
 
-const variantStyles = {
-  default: 'bg-card border-border',
-  primary: 'bg-primary/5 border-primary/20',
-  success: 'bg-success/5 border-success/20',
-  warning: 'bg-warning/5 border-warning/20',
-};
-
 const iconVariantStyles = {
   default: 'bg-muted text-muted-foreground',
-  primary: 'bg-primary/10 text-primary',
-  success: 'bg-success/10 text-success',
-  warning: 'bg-warning/10 text-warning',
+  primary: 'from-primary to-accent text-primary-foreground',
+  success: 'from-success to-success/70 text-success-foreground',
+  warning: 'from-warning to-warning/70 text-warning-foreground',
 };
 
 export function StatCard({ 
@@ -36,29 +29,26 @@ export function StatCard({
   variant = 'default' 
 }: StatCardProps) {
   return (
-    <div className={cn(
-      'stat-card border animate-fade-in',
-      variantStyles[variant]
-    )}>
+    <div className="glass-card-hover p-6 animate-fade-in">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-sm font-medium text-muted-foreground">{title}</p>
-          <p className="text-3xl font-bold text-foreground mt-1">{value}</p>
+          <p className="text-3xl font-extrabold text-foreground mt-1">{value}</p>
           {subtitle && (
             <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>
           )}
           {trend && (
             <p className={cn(
-              'text-sm mt-2 font-medium',
+              'text-sm mt-2 font-semibold',
               trend.isPositive ? 'text-success' : 'text-destructive'
             )}>
-              {trend.isPositive ? '+' : ''}{trend.value}% from last month
+              {trend.isPositive ? '↑ ' : '↓ '}{Math.abs(trend.value)}% from last month
             </p>
           )}
         </div>
         <div className={cn(
           'w-12 h-12 rounded-xl flex items-center justify-center',
-          iconVariantStyles[variant]
+          variant === 'default' ? iconVariantStyles.default : 'bg-gradient-to-br ' + iconVariantStyles[variant]
         )}>
           <Icon className="w-6 h-6" />
         </div>
