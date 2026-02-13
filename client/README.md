@@ -1,73 +1,147 @@
-# Welcome to your Lovable project
+# 🚀 Complete IT Asset Management System with Issue Tracking
 
-## Project info
+## 📌 Overview
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+The **IT Asset Management System** is a Full-Stack Web Application designed to manage organizational IT assets, user roles, assignments, and repair workflows.
 
-## How can I edit this code?
+This system provides secure authentication, role-based access control, asset lifecycle tracking, and issue management.
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## 🛠 Technology Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- **Frontend:** React.js  
+- **Backend:** Python Flask  
+- **Database:** MySQL  
+- **Authentication:** JWT (JSON Web Tokens)  
+- **Security:** Password Hashing (bcrypt / werkzeug)
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## 🎯 Features
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 👥 User Management (Admin)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Create / Update Users  
+- Role Assignment (Admin / Employee)  
+- Activate / Deactivate Users  
+- Password Reset  
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 💻 Asset Management (Admin)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Full CRUD Operations  
+- Unique Serial Number Validation  
+- Asset Condition Tracking  
+- Asset Status Lifecycle  
 
-# Step 3: Install the necessary dependencies.
-npm i
+**Asset States:**
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Available → Assigned → Maintenance
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 🔄 Asset Assignment
 
-**Use GitHub Codespaces**
+- Assign / Return Assets  
+- Prevent Duplicate Assignments  
+- Automatic Status Updates  
+- Assignment History Tracking  
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+### 🏢 Department Module
 
-This project is built with:
+- Department-Wise Asset Visibility  
+- Employee Listing per Department  
+- Filtering & Reporting  
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+### 🛠 Repair / Issue Requests
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+### Employee Capabilities
 
-## Can I connect a custom domain to my Lovable project?
+- View Assigned Assets  
+- Report Issues  
+- Track Request Status  
+- View Admin Remarks  
 
-Yes, you can!
+### Admin Capabilities
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- View All Requests  
+- Update Status  
+- Add Remarks  
+- Department-Based Filtering  
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+
+## 🔁 Issue Workflow
+
+- 🟡 Pending  
+- 🔵 In Progress  
+- 🟢 Resolved  
+- 🔴 Rejected (Optional)
+
+---
+
+## 🔐 Security Implementation
+
+✔ Email-Based Login  
+✔ Hashed Password Storage  
+✔ JWT Authentication  
+✔ Role-Based Access Control (RBAC)  
+✔ Protected API Routes  
+
+---
+
+## 🗄 Database Structure (MySQL)
+
+**Core Tables**
+
+- roles  
+- users  
+- assets  
+- assignments  
+- assignment_history  
+- repair_requests  
+
+**Constraints**
+
+✔ Foreign Keys  
+✔ Unique Constraints  
+✔ ENUM Fields  
+✔ NOT NULL Integrity  
+
+---
+
+## ⚙ System Architecture
+
+Client → Server → Database
+
+React.js → REST APIs → Flask → MySQL
+
+---
+
+## 🚀 Installation & Setup
+
+### 1️⃣ Clone Repository
+
+
+
+```bash
+git clone <repository_url>
+cd project_folder
+
+cd backend
+pip install -r requirements.txt
+
+JWT_SECRET_KEY=your_secret_key
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=asset_management
+python app.py
+
+
